@@ -1,4 +1,11 @@
 <resources>
-    <string name="app_name">CandS</string>
+    <string name="app_name">Collect And Share Stuff</string>
     <string name="app_slash_title">Collect\n&#038;\nShare</string>
+    <string name="btnAdd">ADD</string>
+    <string name="btnManage">Manage</string>
+    <string name="btnShare">Share</string>
+
+
+    <string name="picture">Picture</string>
+  
 </resources>
