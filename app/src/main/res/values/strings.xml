@@ -11,4 +11,6 @@
     <!--Database-->
     <string name="dbName">CAS</string>
 
+    <!--Google map api key-->
+    <string name="google_map_api_key">AIzaSyBOhJBQieHp4JRRMe9f9CpfJL6tOzyZQlk</string>
 </resources>
