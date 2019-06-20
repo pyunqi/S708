@@ -3,6 +3,7 @@ package com.yupa.cands.camera;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.ImageFormat;
@@ -35,9 +36,11 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.yupa.cands.R;
+import com.yupa.cands.stuff.AddStuff;
 import com.yupa.cands.utils.ShowMessage;
 
 import java.io.File;
@@ -50,6 +53,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -387,13 +391,34 @@ public class Camera extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-        mTextureView =  findViewById(R.id.texture);
+        mTextureView = findViewById(R.id.texture);
         Button takePictureButton = findViewById(R.id.btnTakePic);
-        mFile = new File(this.getExternalFilesDir(null), UUID.randomUUID().toString()+"pic.jpg");
+        mFile = new File(this.getExternalFilesDir(null), UUID.randomUUID().toString() + "pic.jpg");
         takePictureButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(mFile.exists()){
+                    mFile.delete();
+                }
+                final CountDownLatch latch = new CountDownLatch(2);
                 takePicture();
+                ProgressBar mProgressBar = findViewById(R.id.progress_bar_h);
+                mProgressBar.setVisibility(View.VISIBLE);
+                while (true) {
+                    try {
+                        Thread.sleep(200);
+                        if (mFile.exists()) {
+                            break;
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                //add pic file to next activity
+                Intent intent = new Intent(Camera.this, AddStuff.class);
+                intent.putExtra("picFile", mFile);
+                startActivity(intent);
             }
         });
     }
@@ -402,7 +427,6 @@ public class Camera extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         startBackgroundThread();
-
         // When the screen is turned off and turned back on, the SurfaceTexture is already
         // available, and "onSurfaceTextureAvailable" will not be called. In that case, we can open
         // a camera and start preview from here (otherwise, we wait until the surface is ready in
@@ -778,7 +802,6 @@ public class Camera extends AppCompatActivity {
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session,
                                                @NonNull CaptureRequest request,
                                                @NonNull TotalCaptureResult result) {
-                    showToast("Saved: " + mFile);
                     Log.d(TAG, mFile.toString());
                     unlockFocus();
                 }
@@ -840,6 +863,7 @@ public class Camera extends AppCompatActivity {
 
         @Override
         public void run() {
+
             ByteBuffer buffer = mImage.getPlanes()[0].getBuffer();
             byte[] bytes = new byte[buffer.remaining()];
             buffer.get(bytes);
