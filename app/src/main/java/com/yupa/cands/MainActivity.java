@@ -7,9 +7,13 @@ import android.view.View;
 import android.widget.Button;
 
 import com.yupa.cands.camera.Camera;
+import com.yupa.cands.db.DBController;
+import com.yupa.cands.db.Stuff;
 import com.yupa.cands.utils.ShowMessage;
 
 public class MainActivity extends AppCompatActivity {
+
+    DBController dbController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +26,20 @@ public class MainActivity extends AppCompatActivity {
                 addStuff();
             }
         });
+        dbController = new DBController(this);
+        if (dbController.getAllStuff().isEmpty()) {
+
+        } else {
+            for (Stuff stuff : dbController.getAllStuff()) {
+                ShowMessage.showCenter(this, stuff.get_description());
+            }
+        }
     }
-    private void addStuff(){
-        ShowMessage.showCenter(MainActivity.this,"click me, I'm add");
+
+    /**
+     * go to take stuff pic step
+     */
+    private void addStuff() {
         Intent intent = new Intent(this, Camera.class);
         startActivity(intent);
     }

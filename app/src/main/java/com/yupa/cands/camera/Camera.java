@@ -402,8 +402,6 @@ public class Camera extends AppCompatActivity {
                 }
                 final CountDownLatch latch = new CountDownLatch(2);
                 takePicture();
-                ProgressBar mProgressBar = findViewById(R.id.progress_bar_h);
-                mProgressBar.setVisibility(View.VISIBLE);
                 while (true) {
                     try {
                         Thread.sleep(200);
@@ -419,6 +417,7 @@ public class Camera extends AppCompatActivity {
                 Intent intent = new Intent(Camera.this, AddStuff.class);
                 intent.putExtra("picFile", mFile);
                 startActivity(intent);
+                Camera.this.finish();
             }
         });
     }
