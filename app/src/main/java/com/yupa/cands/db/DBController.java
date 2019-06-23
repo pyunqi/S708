@@ -5,17 +5,16 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DBController {
     // Database fields
-    private DBhelper dbHelper;
+    private DBHelper dbHelper;
     private SQLiteDatabase database;
 
     public DBController(Context context) {
-        dbHelper = new DBhelper(context);
+        dbHelper = new DBHelper(context);
     }
 
     public void close() {
@@ -28,15 +27,15 @@ public class DBController {
 
         ContentValues values = new ContentValues();
 
-        values.put(DBhelper.COL_STUFF_NAME, stuff.get_name());
-        values.put(DBhelper.COL_STUFF_PICTURE, stuff.get_picture());
-        values.put(DBhelper.COL_STUFF_QUANTITY, stuff.get_quantity());
-        values.put(DBhelper.COL_STUFF_TAG, stuff.get_tag());
-        values.put(DBhelper.COL_STUFF_LATITUDE, stuff.get_laitude());
-        values.put(DBhelper.COL_STUFF_LONGITUDE, stuff.get_longitude());
-        values.put(DBhelper.COL_STUFF_DESCRIPTION, stuff.get_description());
+        values.put(DBHelper.COL_STUFF_NAME, stuff.get_name());
+        values.put(DBHelper.COL_STUFF_PICTURE, stuff.get_picture());
+        values.put(DBHelper.COL_STUFF_QUANTITY, stuff.get_quantity());
+        values.put(DBHelper.COL_STUFF_TAG, stuff.get_tag());
+        values.put(DBHelper.COL_STUFF_LATITUDE, stuff.get_laitude());
+        values.put(DBHelper.COL_STUFF_LONGITUDE, stuff.get_longitude());
+        values.put(DBHelper.COL_STUFF_DESCRIPTION, stuff.get_description());
 
-        database.insert(DBhelper.TABLE_NAME, null, values);
+        database.insert(DBHelper.TABLE_NAME, null, values);
 
         System.out.println("Record Added");
         database.close();
@@ -46,7 +45,7 @@ public class DBController {
 
         database = dbHelper.getReadableDatabase();
 
-        Cursor cursor = database.query(DBhelper.TABLE_NAME, DBhelper.columns, DBhelper.COL_STUFF_ID + " =?",
+        Cursor cursor = database.query(DBHelper.TABLE_NAME, DBHelper.columns, DBHelper.COL_STUFF_ID + " =?",
                 new String[]{String.valueOf(_id)}, null, null, null);
         if (cursor != null) {
             cursor.moveToFirst();
@@ -66,7 +65,7 @@ public class DBController {
 
         List<Stuff> contactList = new ArrayList<Stuff>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + DBhelper.TABLE_NAME;
+        String selectQuery = "SELECT  * FROM " + DBHelper.TABLE_NAME;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
 
@@ -97,15 +96,15 @@ public class DBController {
 
         ContentValues values = new ContentValues();
 
-        values.put(DBhelper.COL_STUFF_NAME, stuff.get_name());
-        values.put(DBhelper.COL_STUFF_QUANTITY, stuff.get_quantity());
-        values.put(DBhelper.COL_STUFF_PICTURE, stuff.get_picture());
-        values.put(DBhelper.COL_STUFF_DESCRIPTION, stuff.get_description());
-        values.put(DBhelper.COL_STUFF_LATITUDE, stuff.get_laitude());
-        values.put(DBhelper.COL_STUFF_LONGITUDE, stuff.get_longitude());
-        values.put(DBhelper.COL_STUFF_TAG, stuff.get_tag());
+        values.put(DBHelper.COL_STUFF_NAME, stuff.get_name());
+        values.put(DBHelper.COL_STUFF_QUANTITY, stuff.get_quantity());
+        values.put(DBHelper.COL_STUFF_PICTURE, stuff.get_picture());
+        values.put(DBHelper.COL_STUFF_DESCRIPTION, stuff.get_description());
+        values.put(DBHelper.COL_STUFF_LATITUDE, stuff.get_laitude());
+        values.put(DBHelper.COL_STUFF_LONGITUDE, stuff.get_longitude());
+        values.put(DBHelper.COL_STUFF_TAG, stuff.get_tag());
         // updating row
-        return db.update(DBhelper.TABLE_NAME, values, DBhelper.COL_STUFF_ID + " = ?",
+        return db.update(DBHelper.TABLE_NAME, values, DBHelper.COL_STUFF_ID + " = ?",
                 new String[]{String.valueOf(stuff.get_id())});
     }
 
@@ -113,7 +112,7 @@ public class DBController {
     public void deleteEmployee(Stuff stuff) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        db.delete(DBhelper.TABLE_NAME, DBhelper.COL_STUFF_ID + " = ?",
+        db.delete(DBHelper.TABLE_NAME, DBHelper.COL_STUFF_ID + " = ?",
                 new String[]{String.valueOf(stuff.get_id())});
 
         System.out.println("Record Deleted");
@@ -124,7 +123,7 @@ public class DBController {
     public void deleteStuff(int _id) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        db.delete(DBhelper.TABLE_NAME, DBhelper.COL_STUFF_ID + " = ?",
+        db.delete(DBHelper.TABLE_NAME, DBHelper.COL_STUFF_ID + " = ?",
                 new String[]{String.valueOf(_id)});
         db.close();
     }

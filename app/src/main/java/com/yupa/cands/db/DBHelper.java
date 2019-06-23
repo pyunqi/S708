@@ -4,7 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class DBhelper extends SQLiteOpenHelper {
+public class DBHelper extends SQLiteOpenHelper {
 
     //Table Name
     public static final String TABLE_NAME = "tbStuff";
@@ -19,12 +19,12 @@ public class DBhelper extends SQLiteOpenHelper {
     public static final String COL_STUFF_TAG = "_tag";
 
 
-    static final String[] columns = new String[]{DBhelper.COL_STUFF_ID,
-            DBhelper.COL_STUFF_NAME, DBhelper.COL_STUFF_PICTURE,DBhelper.COL_STUFF_QUANTITY,
-            DBhelper.COL_STUFF_DESCRIPTION,DBhelper.COL_STUFF_LATITUDE,DBhelper.COL_STUFF_LONGITUDE,DBhelper.COL_STUFF_TAG};
+    static final String[] columns = new String[]{DBHelper.COL_STUFF_ID,
+            DBHelper.COL_STUFF_NAME, DBHelper.COL_STUFF_PICTURE, DBHelper.COL_STUFF_QUANTITY,
+            DBHelper.COL_STUFF_DESCRIPTION, DBHelper.COL_STUFF_LATITUDE, DBHelper.COL_STUFF_LONGITUDE, DBHelper.COL_STUFF_TAG};
     //Database Information
     private static final String DATABASE_NAME = "cas.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // creation SQLite statement
     private static final String DATABASE_CREATE = "CREATE TABLE " + TABLE_NAME
@@ -34,7 +34,7 @@ public class DBhelper extends SQLiteOpenHelper {
             " TEXT NOT NULL, " + COL_STUFF_LATITUDE + " DOUBLE , " + COL_STUFF_LONGITUDE + " DOUBLE , " +
             ""+ COL_STUFF_TAG + " TEXT NOT NULL);";
 
-    public DBhelper(Context context) {
+    public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         System.out.println("DB Created");
     }
