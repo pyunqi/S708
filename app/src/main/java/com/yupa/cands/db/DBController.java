@@ -31,7 +31,7 @@ public class DBController {
         values.put(DBHelper.COL_STUFF_PICTURE, stuff.get_picture());
         values.put(DBHelper.COL_STUFF_QUANTITY, stuff.get_quantity());
         values.put(DBHelper.COL_STUFF_TAG, stuff.get_tag());
-        values.put(DBHelper.COL_STUFF_LATITUDE, stuff.get_laitude());
+        values.put(DBHelper.COL_STUFF_LATITUDE, stuff.get_latitude());
         values.put(DBHelper.COL_STUFF_LONGITUDE, stuff.get_longitude());
         values.put(DBHelper.COL_STUFF_DESCRIPTION, stuff.get_description());
 
@@ -78,7 +78,7 @@ public class DBController {
                 stuff.set_picture(cursor.getString(2));
                 stuff.set_quantity(cursor.getInt(3));
                 stuff.set_description(cursor.getString(4));
-                stuff.set_laitude(cursor.getDouble(5));
+                stuff.set_latitude(cursor.getDouble(5));
                 stuff.set_longitude(cursor.getDouble(6));
                 stuff.set_tag(cursor.getString(7));
                 // Adding contact to list
@@ -100,7 +100,7 @@ public class DBController {
         values.put(DBHelper.COL_STUFF_QUANTITY, stuff.get_quantity());
         values.put(DBHelper.COL_STUFF_PICTURE, stuff.get_picture());
         values.put(DBHelper.COL_STUFF_DESCRIPTION, stuff.get_description());
-        values.put(DBHelper.COL_STUFF_LATITUDE, stuff.get_laitude());
+        values.put(DBHelper.COL_STUFF_LATITUDE, stuff.get_latitude());
         values.put(DBHelper.COL_STUFF_LONGITUDE, stuff.get_longitude());
         values.put(DBHelper.COL_STUFF_TAG, stuff.get_tag());
         // updating row

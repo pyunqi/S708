@@ -105,10 +105,10 @@ public class AddStuff extends AppCompatActivity {
 
                 Stuff stuff = new Stuff();
                 if (mCurrentLocation != null) {
-                    stuff.set_laitude(mCurrentLocation.getAltitude());
+                    stuff.set_latitude(mCurrentLocation.getAltitude());
                     stuff.set_longitude(mCurrentLocation.getLongitude());
                 } else {// give default
-                    stuff.set_laitude(0.00);
+                    stuff.set_latitude(0.00);
                     stuff.set_longitude(0.00);
                 }
                 stuff.set_description(description);

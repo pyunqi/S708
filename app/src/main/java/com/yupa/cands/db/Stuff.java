@@ -7,7 +7,7 @@ public class Stuff {
     private String _picture;
     private int _quantity;
     private String _description;
-    private Double _laitude;
+    private Double _latitude;
     private Double _longitude;
     private  String _tag;
 
@@ -15,12 +15,12 @@ public class Stuff {
 
     }
 
-    public Stuff(int _id,String _name, String _picture, int _quantity, String _description, Double _laitude,Double _longitude, String _tag) {
+    public Stuff(int _id, String _name, String _picture, int _quantity, String _description, Double _latitude, Double _longitude, String _tag) {
         this.set_name(_name);
         this.set_picture(_picture);
         this.set_quantity(_quantity);
         this.set_description(_description);
-        this.set_laitude(_laitude);
+        this.set_latitude(_latitude);
         this.set_longitude(_longitude);
         this.set_tag(_tag);
         this.set_id(_id);
@@ -67,12 +67,12 @@ public class Stuff {
         this._description = _description;
     }
 
-    public Double get_laitude() {
-        return _laitude;
+    public Double get_latitude() {
+        return _latitude;
     }
 
-    public void set_laitude(Double _laitude) {
-        this._laitude = _laitude;
+    public void set_latitude(Double _latitude) {
+        this._latitude = _latitude;
     }
 
     public Double get_longitude() {
