@@ -35,11 +35,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 1. Get a reference to the recyclerView
         ListView mListView = (ListView) findViewById(R.id.listView);
-        // 2. Create an adapter
+        // Create stuff adapter
         final StuffAdapter stuffsAdapter = new StuffAdapter(this, setStuffs());
-        // 3. Set the adapter
+        // Set the adapter
         if(!stuffsAdapter.isEmpty()) {
             mListView.setAdapter(stuffsAdapter);
             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
