@@ -80,7 +80,9 @@ public class AddStuff extends AppCompatActivity {
                 edtDescription = findViewById(R.id.edtDescription);
                 //get all needed values
                 String name = edtName.getText().toString();
-                int quantity = Integer.parseInt(edtQuantitiy.getText().toString());
+                int quantity = 1;
+
+
                 String tag = edtTag.getText().toString();
                 String description = edtDescription.getText().toString();
 
@@ -88,8 +90,19 @@ public class AddStuff extends AppCompatActivity {
                     edtName.setError("Stuff Name field is empty/not valid");
                     return;
                 }
-                if (quantity <= 0 || TextUtils.isEmpty(edtQuantitiy.getText())) {
-                    edtQuantitiy.setError("Quantitiy field is empty/not valid");
+                if (TextUtils.isEmpty(edtQuantitiy.getText())) {
+                    edtQuantitiy.setError("Quantity field is empty/not valid");
+                    return;
+                }
+
+                try{
+                    quantity = Integer.parseInt(edtQuantitiy.getText().toString());
+                }catch (NumberFormatException e){
+                    ShowMessage.showCenter(AddStuff.this,"need a number");
+                    return;
+                }
+                if(quantity <=0){
+                    ShowMessage.showCenter(AddStuff.this,"Quantity has to be bigger than 0!");
                     return;
                 }
                 if (TextUtils.isEmpty(tag)) {
