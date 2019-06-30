@@ -1,4 +1,4 @@
-package com.yupa.cands;
+package com.yupa.cands.fragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.yupa.cands.utils.ShowMessage;
+import com.yupa.cands.R;
 
 
 public class AboutCASFragment extends Fragment {

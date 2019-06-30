@@ -16,12 +16,9 @@ import android.widget.Toast;
 
 import com.yupa.cands.camera.Camera;
 import com.yupa.cands.db.DBController;
-import com.yupa.cands.db.Stuff;
-import com.yupa.cands.utils.ShowMessage;
-import com.yupa.cands.utils.StuffAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.yupa.cands.fragments.AboutCASFragment;
+import com.yupa.cands.stuff.StuffManagement;
+import com.yupa.cands.stuff.StuffAdapter;
 
 public class MainActivity extends AppCompatActivity implements AboutCASFragment.OnFragmentInteractionListener {
 
@@ -43,6 +40,15 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
                 addStuff();
             }
         });
+
+        Button btnTemp = findViewById(R.id.btnSearch);
+        btnTemp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this,GalleryActivity.class);
+                startActivity(intent);
+            }
+        });
         Thread listStuffs = new Thread(new ShowStuffsList((ListView) findViewById(R.id.listView)));
         listStuffs.start();
 
@@ -54,6 +60,9 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
 
     }
 
+    /**
+     * load stuffs thread
+     */
     class ShowStuffsList implements Runnable {
 
         ListView lv;
@@ -74,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
                 @Override
                 public void run() {
                     // Create stuff adapter
-                    final StuffAdapter stuffsAdapter = new StuffAdapter(MainActivity.this, setStuffs());
+                    final StuffAdapter stuffsAdapter = new StuffAdapter(MainActivity.this, StuffManagement.getStuffs(dbController,MainActivity.this));
                     // Set the adapter
                     if (!stuffsAdapter.isEmpty()) {
                         lv.setAdapter(stuffsAdapter);
@@ -136,22 +145,6 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         startActivity(intent);
-    }
-
-    private List<Stuff> setStuffs() {
-
-        List<Stuff> stuffs = new ArrayList<>();
-        dbController = new DBController(this);
-        if (dbController.getAllStuff().isEmpty()) {
-
-        } else {
-            ShowMessage.showCenter(this, String.valueOf(dbController.getAllStuff().size()));
-            for (Stuff stuff : dbController.getAllStuff()) {
-                stuffs.add(stuff);
-
-            }
-        }
-        return stuffs;
     }
 
     /**

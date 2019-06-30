@@ -10,7 +10,6 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -21,7 +20,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".StuffAdapterActivity"></activity>
+        <activity android:name=".EditStuffActivity"></activity>
+        <activity android:name=".GalleryActivity" />
+        <activity android:name=".StuffAdapterActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -37,7 +38,7 @@
         <activity android:name=".stuff.AddStuff" />
         <activity
             android:name=".camera.Camera"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SlashTheme">
@@ -49,7 +50,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

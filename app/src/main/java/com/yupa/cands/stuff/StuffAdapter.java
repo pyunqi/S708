@@ -1,4 +1,4 @@
-package com.yupa.cands.utils;
+package com.yupa.cands.stuff;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.yupa.cands.R;
 import com.yupa.cands.db.Stuff;
+import com.yupa.cands.utils.ImageHelper;
 
 import java.util.Collections;
 import java.util.List;
