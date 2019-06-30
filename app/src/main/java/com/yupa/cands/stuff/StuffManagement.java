@@ -4,15 +4,14 @@ import android.content.Context;
 
 import com.yupa.cands.db.DBController;
 import com.yupa.cands.db.Stuff;
-import com.yupa.cands.utils.ShowMessage;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class StuffManagement {
 
-
-    public static List<Stuff> getStuffs(DBController dbController, Context context) {
+    private  static  DBController dbController;
+    public static List<Stuff> getStuffs(Context context) {
 
         List<Stuff> stuffs = new ArrayList<>();
         dbController = new DBController(context);

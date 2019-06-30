@@ -8,16 +8,16 @@
 
     <string name="picture">Take Photo</string>
 
+    <string name="about">About</string>
+    <string name="g_mode">Gallery Mode</string>
+    <string name="l_mode">List Mode</string>
+    <string name="ref_cas">https://www.freepik.com</string>
+    <string name="btnGallery">Gallery</string>
+
+
     <!--Database-->
     <string name="dbName">CAS</string>
 
     <!--Google map api key-->
     <string name="google_map_api_key">AIzaSyBOhJBQieHp4JRRMe9f9CpfJL6tOzyZQlk</string>
-    <string name="about">About</string>
-    <string name="g_mode">Gallery Mode</string>
-    <string name="l_mode">List Mode</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="refernence_cas">https://www.freepik.com</string>
 </resources>

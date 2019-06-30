@@ -15,14 +15,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.yupa.cands.camera.Camera;
-import com.yupa.cands.db.DBController;
 import com.yupa.cands.fragments.AboutCASFragment;
 import com.yupa.cands.stuff.StuffManagement;
 import com.yupa.cands.stuff.StuffAdapter;
 
 public class MainActivity extends AppCompatActivity implements AboutCASFragment.OnFragmentInteractionListener {
 
-    private static DBController dbController;
     private Handler handler = new Handler();
     AboutCASFragment casFragment = AboutCASFragment.newInstance();
 
@@ -30,9 +28,11 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.cas_toolbar);
+        Toolbar myToolbar = findViewById(R.id.cas_toolbar);
+        myToolbar.setTitle("C & S Stuff Main");
         setSupportActionBar(myToolbar);
 
+        //go add new stuff
         Button addStuff = findViewById(R.id.btnAdd);
         addStuff.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,14 +41,17 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
             }
         });
 
-        Button btnTemp = findViewById(R.id.btnSearch);
-        btnTemp.setOnClickListener(new View.OnClickListener() {
+        //go show stuff pics
+        Button btnGallery = findViewById(R.id.btnGallery);
+        btnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this,GalleryActivity.class);
                 startActivity(intent);
             }
         });
+
+
         Thread listStuffs = new Thread(new ShowStuffsList((ListView) findViewById(R.id.listView)));
         listStuffs.start();
 
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
                 @Override
                 public void run() {
                     // Create stuff adapter
-                    final StuffAdapter stuffsAdapter = new StuffAdapter(MainActivity.this, StuffManagement.getStuffs(dbController,MainActivity.this));
+                    final StuffAdapter stuffsAdapter = new StuffAdapter(MainActivity.this, StuffManagement.getStuffs(MainActivity.this));
                     // Set the adapter
                     if (!stuffsAdapter.isEmpty()) {
                         lv.setAdapter(stuffsAdapter);
@@ -118,14 +121,11 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_switch:
-                // User chose the "Settings" item, show the app settings UI...
-                return true;
             case R.id.action_about:
 
-                if (getSupportFragmentManager().findFragmentById(R.id.about) == null) {
+                if (getSupportFragmentManager().findFragmentById(R.id.m_about) == null) {
                     getSupportFragmentManager().beginTransaction().addToBackStack(null)
-                            .add(R.id.about, casFragment, "About").commit();
+                            .add(R.id.m_about, casFragment, "About").commit();
                 }
                 return true;
 

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <!-- "Mark Favorite", should appear as action button if possible -->
     <item
         android:id="@+id/action_about"
         android:icon="@drawable/ic_help_outline_black_24dp"
         android:title="@string/about"
         app:showAsAction="ifRoom" />
 
-    <item
-        android:id="@+id/action_switch"
-        android:title="@string/g_mode"
-        app:showAsAction="withText" />
-    <item
-        android:id="@+id/action_swssitchx"
-        android:title="@string/l_mode"
-        app:showAsAction="withText" />
+    <!--<item-->
+        <!--android:id="@+id/action_switch"-->
+        <!--android:icon="?attr/actionModeCloseDrawable"-->
+        <!--android:title="@string/g_mode"-->
+        <!--app:showAsAction="ifRoom" />-->
+    <!--<item-->
+        <!--android:id="@+id/action_swssitchx"-->
+        <!--android:title="@string/l_mode"-->
+        <!--app:showAsAction="withText" />-->
 </menu>
