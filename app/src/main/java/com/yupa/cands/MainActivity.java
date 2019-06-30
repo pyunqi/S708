@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
             @Override
             public void onClick(View view) {
                 addStuff();
-                MainActivity.this.finish();
             }
         });
         Thread listStuffs = new Thread(new ShowStuffsList((ListView) findViewById(R.id.listView)));
@@ -113,14 +112,12 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
             case R.id.action_switch:
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
-
             case R.id.action_about:
 
                 if (getSupportFragmentManager().findFragmentById(R.id.about) == null) {
                     getSupportFragmentManager().beginTransaction().addToBackStack(null)
                             .add(R.id.about, casFragment, "About").commit();
                 }
-
                 return true;
 
             default:
