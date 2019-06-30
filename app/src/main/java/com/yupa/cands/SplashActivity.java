@@ -20,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         RelativeLayout rlFull = findViewById(R.id.rlFull);
-        rlFull.setBackground(getResources().getDrawable(R.drawable.background, null));
+        rlFull.setBackground(getResources().getDrawable(R.drawable.back, null));
         SplashThread st = new SplashThread();
         st.start();
     }

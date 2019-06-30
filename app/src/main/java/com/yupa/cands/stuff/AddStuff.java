@@ -236,9 +236,11 @@ public class AddStuff extends AppCompatActivity {
                             return;
                         }
                     }
-                    mLocationPermissionGranted = true;
+                    getLocationPermission();
                 }
             }
         }
     }
+
+
 }

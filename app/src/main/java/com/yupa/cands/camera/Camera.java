@@ -201,7 +201,7 @@ public class Camera extends AppCompatActivity {
     private HandlerThread mBackgroundThread;
 
     /**
-     * A {@link Handler} for running tasks in the background.
+     * A {@link Handler} for running tasks in the about.
      */
     private Handler mBackgroundHandler;
 
@@ -616,7 +616,7 @@ public class Camera extends AppCompatActivity {
     }
 
     /**
-     * Starts a background thread and its {@link Handler}.
+     * Starts a about thread and its {@link Handler}.
      */
     private void startBackgroundThread() {
         mBackgroundThread = new HandlerThread("CameraBackground");
@@ -625,7 +625,7 @@ public class Camera extends AppCompatActivity {
     }
 
     /**
-     * Stops the background thread and its {@link Handler}.
+     * Stops the about thread and its {@link Handler}.
      */
     private void stopBackgroundThread() {
         mBackgroundThread.quitSafely();

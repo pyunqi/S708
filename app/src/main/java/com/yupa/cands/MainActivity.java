@@ -1,6 +1,8 @@
 package com.yupa.cands;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -21,9 +23,11 @@ import com.yupa.cands.utils.StuffAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AboutCASFragment.OnFragmentInteractionListener {
 
-    DBController dbController;
+    private static DBController dbController;
+    private Handler handler = new Handler();
+    AboutCASFragment casFragment = AboutCASFragment.newInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +44,58 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.finish();
             }
         });
+        Thread listStuffs = new Thread(new ShowStuffsList((ListView) findViewById(R.id.listView)));
+        listStuffs.start();
 
-        ListView mListView = (ListView) findViewById(R.id.listView);
-        // Create stuff adapter
-        final StuffAdapter stuffsAdapter = new StuffAdapter(this, setStuffs());
-        // Set the adapter
-        if (!stuffsAdapter.isEmpty()) {
-            mListView.setAdapter(stuffsAdapter);
-            mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
+
+    class ShowStuffsList implements Runnable {
+
+        ListView lv;
+
+        //prepare for sorting or searching
+        ShowStuffsList(String stuffName) {
+
+        }
+
+        ShowStuffsList(ListView v) {
+            lv = v;
+        }
+
+        @Override
+        public void run() {
+
+            handler.post(new Runnable() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Toast.makeText(getApplicationContext(), stuffsAdapter.getStuff(position) + " is a friend", Toast.LENGTH_SHORT).show();
+                public void run() {
+                    // Create stuff adapter
+                    final StuffAdapter stuffsAdapter = new StuffAdapter(MainActivity.this, setStuffs());
+                    // Set the adapter
+                    if (!stuffsAdapter.isEmpty()) {
+                        lv.setAdapter(stuffsAdapter);
+                        //listen Click stuff event
+                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                Toast.makeText(getApplicationContext(), stuffsAdapter.getStuff(position) + " is a friend", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 }
             });
+
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 
@@ -68,13 +110,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            case R.id.action_switch:
                 // User chose the "Settings" item, show the app settings UI...
                 return true;
 
-            case R.id.action_favorite:
-                // User chose the "Favorite" action, mark the current item
-                // as a favorite...
+            case R.id.action_about:
+
+                if (getSupportFragmentManager().findFragmentById(R.id.about) == null) {
+                    getSupportFragmentManager().beginTransaction().addToBackStack(null)
+                            .add(R.id.about, casFragment, "About").commit();
+                }
+
                 return true;
 
             default:
