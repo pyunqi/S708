@@ -36,11 +36,10 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.yupa.cands.R;
-import com.yupa.cands.stuff.AddStuff;
+import com.yupa.cands.AddStuffActivity;
 import com.yupa.cands.utils.ShowMessage;
 
 import java.io.File;
@@ -53,7 +52,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -413,7 +411,7 @@ public class Camera extends AppCompatActivity {
 
                 }
                 //add pic file to next activity
-                Intent intent = new Intent(Camera.this, AddStuff.class);
+                Intent intent = new Intent(Camera.this, AddStuffActivity.class);
                 intent.putExtra("picFile", mFile);
                 startActivity(intent);
                 Camera.this.finish();

@@ -30,7 +30,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
-        <activity android:name=".EditStuffActivity"></activity>
+        <activity android:name=".EditStuffActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+        </activity>
         <activity android:name=".GalleryActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".StuffAdapterActivity" />
@@ -46,7 +48,8 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".stuff.AddStuff" />
+        <activity android:name=".AddStuffActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".camera.Camera"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

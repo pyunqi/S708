@@ -1,6 +1,5 @@
 package com.yupa.cands;
 
-import android.app.ActionBar;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +12,7 @@ import com.mindorks.placeholderview.PlaceHolderView;
 import com.yupa.cands.db.Stuff;
 import com.yupa.cands.fragments.AboutCASFragment;
 import com.yupa.cands.stuff.StuffManagement;
+import com.yupa.cands.utils.GalleryItem;
 import com.yupa.cands.utils.ImageHelper;
 
 public class GalleryActivity extends AppCompatActivity implements AboutCASFragment.OnFragmentInteractionListener {
