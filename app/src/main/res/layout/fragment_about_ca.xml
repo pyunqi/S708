@@ -99,5 +99,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="145dp"
         android:layout_marginBottom="29dp"
+        android:background="@drawable/btn_cor"
         android:text="@string/mr_controller_close_description" />
 </RelativeLayout>

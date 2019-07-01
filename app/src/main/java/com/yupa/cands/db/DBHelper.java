@@ -24,7 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
             DBHelper.COL_STUFF_DESCRIPTION, DBHelper.COL_STUFF_LATITUDE, DBHelper.COL_STUFF_LONGITUDE, DBHelper.COL_STUFF_TAG};
     //Database Information
     private static final String DATABASE_NAME = "cas.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 1;
 
     // creation SQLite statement
     private static final String DATABASE_CREATE = "CREATE TABLE " + TABLE_NAME

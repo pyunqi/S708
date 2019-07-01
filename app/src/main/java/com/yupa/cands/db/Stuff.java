@@ -1,6 +1,8 @@
 package com.yupa.cands.db;
 
-public class Stuff {
+import java.io.Serializable;
+
+public class Stuff implements Serializable {
 
     private int _id;
     private String _name;
@@ -9,9 +11,9 @@ public class Stuff {
     private String _description;
     private Double _latitude;
     private Double _longitude;
-    private  String _tag;
+    private String _tag;
 
-    public Stuff(){
+    public Stuff() {
 
     }
 

@@ -1,10 +1,12 @@
 package com.yupa.cands;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
@@ -17,9 +19,9 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.yupa.cands.camera.Camera;
+import com.yupa.cands.db.DBController;
 import com.yupa.cands.fragments.AboutCASFragment;
 import com.yupa.cands.stuff.StuffManagement;
 import com.yupa.cands.stuff.StuffAdapter;
@@ -58,11 +60,6 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
                 startActivity(intent);
             }
         });
-
-
-        Thread listStuffs = new Thread(new ShowStuffsList((ListView) findViewById(R.id.listView)));
-        listStuffs.start();
-
 
     }
 
@@ -114,21 +111,37 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
                                         switch (item.getItemId()) {
                                             case R.id.share:
                                                 File fileLocation = new File(stuffsAdapter.getStuff(position).get_picture());
-                                                Uri path = FileProvider.getUriForFile(MainActivity.this,"com.yupa.fileprovider",fileLocation);
+                                                Uri path = FileProvider.getUriForFile(MainActivity.this, "com.yupa.fileprovider", fileLocation);
                                                 Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                                                emailIntent .setType("vnd.android.cursor.dir/email");
+                                                emailIntent.setType("vnd.android.cursor.dir/email");
                                                 String to[] = {""};
-                                                emailIntent .putExtra(Intent.EXTRA_EMAIL, to);
-                                                emailIntent .putExtra(Intent.EXTRA_STREAM, path);
-                                                emailIntent .putExtra(Intent.EXTRA_SUBJECT, "I would like Share Stuff: "+stuffsAdapter.getStuff(position).get_name());
-                                                emailIntent .putExtra(Intent.EXTRA_TEXT,stuffsAdapter.getStuff(position).get_description());
-                                                startActivity(Intent.createChooser(emailIntent , "Send email..."));
+                                                emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
+                                                emailIntent.putExtra(Intent.EXTRA_STREAM, path);
+                                                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "I would like Share Stuff: " + stuffsAdapter.getStuff(position).get_name());
+                                                emailIntent.putExtra(Intent.EXTRA_TEXT, stuffsAdapter.getStuff(position).get_description());
+                                                startActivity(Intent.createChooser(emailIntent, "Send email..."));
+                                                return true;
                                             case R.id.edit:
-                                                Toast.makeText(
-                                                        MainActivity.this,
-                                                        "You Clicked : edits " + item.getTitle(),
-                                                        Toast.LENGTH_SHORT
-                                                ).show();
+                                                Intent intent = new Intent(MainActivity.this, EditStuffActivity.class);
+                                                intent.putExtra("stuff", stuffsAdapter.getStuff(position));
+                                                startActivity(intent);
+                                                return true;
+                                            case R.id.del:
+                                                new AlertDialog.Builder(MainActivity.this)
+                                                        .setTitle("Delete entry")
+                                                        .setMessage("Are you sure you want to delete this entry?")
+                                                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                StuffManagement.deleteStuff(MainActivity.this,
+                                                                        stuffsAdapter.getStuff(position).get_id(),
+                                                                        stuffsAdapter.getStuff(position).get_picture());
+                                                                Thread listStuffs = new Thread(new ShowStuffsList((ListView) findViewById(R.id.listView)));
+                                                                listStuffs.start();
+                                                            }
+                                                        })
+                                                        .setNegativeButton(android.R.string.no, null)
+                                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                                        .show();
                                         }
                                         return true;
                                     }
@@ -145,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
         }
     }
 
-    private void setmScreenWidth() {
+    private void getmScreenWidth() {
         WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(dm);
@@ -155,6 +168,9 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
     @Override
     protected void onResume() {
         super.onResume();
+        Thread listStuffs = new Thread(new ShowStuffsList((ListView) findViewById(R.id.listView)));
+        listStuffs.start();
+
 
     }
 

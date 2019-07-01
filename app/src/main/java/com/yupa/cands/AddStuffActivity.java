@@ -57,9 +57,9 @@ public class AddStuffActivity extends AppCompatActivity {
     //DB
     private DBController dbController;
     //UI
-    EditText edtName, edtQuantitiy, edtTag, edtDescription;
+    EditText edtName, edtQuantity, edtTag, edtDescription;
 
-    AboutCASFragment casFragment  = new AboutCASFragment();
+    AboutCASFragment casFragment = new AboutCASFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class AddStuffActivity extends AppCompatActivity {
         if (isServiceOK()) {
             getLocationPermission();
         }
-        final String pPath = mPic.getAbsolutePath();
+        String pPath = mPic.getAbsolutePath();
         btnSubmit = findViewById(R.id.btnSubmit);
         setSubmitButton(pPath);
 
@@ -106,13 +106,14 @@ public class AddStuffActivity extends AppCompatActivity {
         }
     }
 
-    private void setSubmitButton(final String pPath) {
+    private void setSubmitButton(String pPath) {
+        final String path = pPath;
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // UI
                 edtName = findViewById(R.id.edtTxtName);
-                edtQuantitiy = findViewById(R.id.edtTxtQuantity);
+                edtQuantity = findViewById(R.id.edtTxtQuantity);
                 edtTag = findViewById(R.id.edtTxtTag);
                 edtDescription = findViewById(R.id.edtDescription);
                 //get all needed values
@@ -127,19 +128,19 @@ public class AddStuffActivity extends AppCompatActivity {
                     edtName.setError("Stuff Name field is empty/not valid");
                     return;
                 }
-                if (TextUtils.isEmpty(edtQuantitiy.getText())) {
-                    edtQuantitiy.setError("Quantity field is empty/not valid");
+                if (TextUtils.isEmpty(edtQuantity.getText())) {
+                    edtQuantity.setError("Quantity field is empty/not valid");
                     return;
                 }
 
-                try{
-                    quantity = Integer.parseInt(edtQuantitiy.getText().toString());
-                }catch (NumberFormatException e){
-                    ShowMessage.showCenter(AddStuffActivity.this,"need a number");
+                try {
+                    quantity = Integer.parseInt(edtQuantity.getText().toString());
+                } catch (NumberFormatException e) {
+                    ShowMessage.showCenter(AddStuffActivity.this, "need a number");
                     return;
                 }
-                if(quantity <=0){
-                    ShowMessage.showCenter(AddStuffActivity.this,"Quantity has to be bigger than 0!");
+                if (quantity <= 0) {
+                    ShowMessage.showCenter(AddStuffActivity.this, "Quantity has to be bigger than 0!");
                     return;
                 }
                 if (TextUtils.isEmpty(tag)) {
@@ -162,7 +163,7 @@ public class AddStuffActivity extends AppCompatActivity {
                     stuff.set_longitude(0.00);
                 }
                 stuff.set_description(description);
-                stuff.set_picture(pPath);
+                stuff.set_picture(path);
                 stuff.set_tag(tag);
                 stuff.set_name(name);
                 stuff.set_quantity(quantity);
@@ -177,7 +178,6 @@ public class AddStuffActivity extends AppCompatActivity {
 
     /**
      * detect google service available or not
-     *
      */
     public boolean isServiceOK() {
         Log.d(TAG, "is ok?");
@@ -226,9 +226,10 @@ public class AddStuffActivity extends AppCompatActivity {
         }
     }
 
-    private  void  moveCamera(LatLng latLng,float zoom){
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
+    private void moveCamera(LatLng latLng, float zoom) {
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
+
     /**
      * set up basic map
      */
@@ -257,7 +258,6 @@ public class AddStuffActivity extends AppCompatActivity {
 
     /**
      * request permission
-     *
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
