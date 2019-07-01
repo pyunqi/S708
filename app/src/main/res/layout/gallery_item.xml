@@ -4,10 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp">
+
     <ImageView
         android:id="@+id/ivPhoto"
         android:layout_width="match_parent"
         android:layout_height="225dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/cas"/>
+        android:scaleType="fitCenter"
+        android:src="@drawable/cas" />
 </LinearLayout>

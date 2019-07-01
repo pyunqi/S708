@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
 
-import com.yupa.cands.utils.ShowMessage;
 
 public class SplashActivity extends AppCompatActivity {
 

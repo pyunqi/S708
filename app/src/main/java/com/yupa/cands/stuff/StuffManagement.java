@@ -27,12 +27,28 @@ public class StuffManagement {
         }
         return stuffs;
     }
+
+    public static List<Stuff> getStuffsByName(Context context, String name) {
+
+        List<Stuff> stuffs = new ArrayList<>();
+        dbController = new DBController(context);
+        if (dbController.getAllStuff().isEmpty()) {
+
+        } else {
+            for (Stuff stuff : dbController.getAllStuffByName(name)) {
+                stuffs.add(stuff);
+            }
+        }
+        return stuffs;
+    }
+
     public static void deleteStuff(Context context,int _id,String path){
         dbController = new DBController(context);
         dbController.deleteStuff(_id);
         DelFile dF = new DelFile(path);
         dF.start();
     }
+
 
     static class DelFile extends Thread {
 

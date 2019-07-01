@@ -24,7 +24,9 @@
             android:layout_margin="4dp"
             android:layout_weight="1"
             android:text="TextView"
-            android:textAlignment="textStart" />
+            android:textAlignment="textStart"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtQuantity"
@@ -33,7 +35,9 @@
             android:layout_margin="4dp"
             android:layout_weight="1"
             android:text="TextView"
-            android:textAlignment="textStart" />
+            android:textAlignment="textStart"
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/txtDescription"

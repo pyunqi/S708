@@ -18,10 +18,10 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.yupa.cands.camera.Camera;
-import com.yupa.cands.db.DBController;
 import com.yupa.cands.fragments.AboutCASFragment;
 import com.yupa.cands.stuff.StuffManagement;
 import com.yupa.cands.stuff.StuffAdapter;
@@ -60,6 +60,30 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
                 startActivity(intent);
             }
         });
+        Button btnSearch = findViewById(R.id.btnSearch);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this);
+                alert.setTitle("Fuzzy Searching by stuff name");
+                alert.setMessage("Input stuff name");
+                final EditText input = new EditText(MainActivity.this);
+                alert.setView(input);
+                alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String result = input.getText().toString();
+                        Thread  showStuffsList = new Thread(new ShowStuffsList((ListView) findViewById(R.id.listView),result));
+                        showStuffsList.start();
+                    }
+                });
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Canceled.
+                    }
+                });
+                alert.show();
+            }
+        });
 
     }
 
@@ -74,10 +98,12 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
     class ShowStuffsList implements Runnable {
 
         ListView lv;
+        String sName = "";
 
         //prepare for sorting or searching
-        ShowStuffsList(String stuffName) {
-
+        ShowStuffsList(ListView v,String stuffName) {
+            lv = v;
+            sName = stuffName;
         }
 
         ShowStuffsList(ListView v) {
@@ -91,14 +117,19 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
                 @Override
                 public void run() {
                     // Create stuff adapter
-                    final StuffAdapter stuffsAdapter = new StuffAdapter(MainActivity.this, StuffManagement.getStuffs(MainActivity.this));
+                    final StuffAdapter stuffsAdapter;
+                    if(sName.isEmpty()) {
+                        stuffsAdapter  = new StuffAdapter(MainActivity.this, StuffManagement.getStuffs(MainActivity.this));
+                    }else {
+                        stuffsAdapter =new StuffAdapter(MainActivity.this, StuffManagement.getStuffsByName(MainActivity.this,sName));
+                    }
                     // Set the adapter
                     if (!stuffsAdapter.isEmpty()) {
                         lv.setAdapter(stuffsAdapter);
                         //listen Click stuff event
-                        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
                                 //Creating the instance of PopupMenu
                                 PopupMenu popup = new PopupMenu(MainActivity.this, view);
                                 //Inflating the Popup using xml file
@@ -128,8 +159,8 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
                                                 return true;
                                             case R.id.del:
                                                 new AlertDialog.Builder(MainActivity.this)
-                                                        .setTitle("Delete entry")
-                                                        .setMessage("Are you sure you want to delete this entry?")
+                                                        .setTitle("Delete stuff")
+                                                        .setMessage("Are you sure you want to delete this stuff?")
                                                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                                             public void onClick(DialogInterface dialog, int which) {
                                                                 StuffManagement.deleteStuff(MainActivity.this,
@@ -149,6 +180,7 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
 
                                 popup.show(); //showing popup menu
 
+                                return false;
                             }
                         });
                     }

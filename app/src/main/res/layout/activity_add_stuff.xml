@@ -113,7 +113,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@color/skyblue"
+            android:background="@drawable/btn_cor"
             android:elevation="4dp"
             android:paddingLeft="70dp"
             android:paddingRight="70dp"
