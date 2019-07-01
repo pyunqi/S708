@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +20,12 @@ import java.util.List;
 public class StuffAdapter extends BaseAdapter {
     private final Context mContext;
     private List<Stuff> mStuffs = Collections.EMPTY_LIST;
+
+    private float downX;  //点下时候获取的x坐标
+    private float upX;   //手指离开时候的x坐标
+    private Button button; //用于执行删除的button
+    private Animation animation;  //删除时候的动画
+
 
     public StuffAdapter(Context mContext, List<Stuff> mStuffs) {
         this.mContext = mContext;
@@ -47,24 +55,24 @@ public class StuffAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView;
-        if (view == null) {
-            LayoutInflater myInflater = LayoutInflater.from(mContext);
-            view = myInflater.inflate(R.layout.activity_stuff_adapter, parent, false);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.activity_stuff_adapter, parent, false);
 
-            ImageView imageView = view.findViewById(R.id.ivImage);
-            TextView textView = view.findViewById(R.id.name);
-            textView.setText(mStuffs.get(position).get_name());
-
+            ImageView imageView = convertView.findViewById(R.id.ivImage);
+            TextView txtName = convertView.findViewById(R.id.txtName);
+            TextView txtQuantity = convertView.findViewById(R.id.txtQuantity);
+            TextView txtDescription = convertView.findViewById(R.id.txtDescription);
+            txtQuantity.setText("Quantity:  "+mStuffs.get(position).get_quantity());
+            txtDescription.setText("Description:\n"+mStuffs.get(position).get_description());
+            txtName.setText("Name:  "+mStuffs.get(position).get_name());
             imageView.setImageBitmap(ImageHelper.decodeSampledBitmapFromFile(mStuffs.get(position).get_picture(), 270, 480));
         }
 
-        return view;
+        return convertView;
     }
 
-
-    public String getStuff(int position) {
-        return mStuffs.get(position).get_name();
+    public Stuff getStuff(int position) {
+        return mStuffs.get(position);
     }
 
 

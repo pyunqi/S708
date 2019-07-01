@@ -400,7 +400,6 @@ public class Camera extends AppCompatActivity {
                 if(mFile.exists()){
                     mFile.delete();
                 }
-                final CountDownLatch latch = new CountDownLatch(2);
                 takePicture();
                 while (true) {
                     try {

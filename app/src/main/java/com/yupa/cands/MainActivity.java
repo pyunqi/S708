@@ -1,14 +1,19 @@
 package com.yupa.cands;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -19,10 +24,13 @@ import com.yupa.cands.fragments.AboutCASFragment;
 import com.yupa.cands.stuff.StuffManagement;
 import com.yupa.cands.stuff.StuffAdapter;
 
+import java.io.File;
+
 public class MainActivity extends AppCompatActivity implements AboutCASFragment.OnFragmentInteractionListener {
 
     private Handler handler = new Handler();
     AboutCASFragment casFragment = AboutCASFragment.newInstance();
+    private int mScreenWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
         btnGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,GalleryActivity.class);
+                Intent intent = new Intent(MainActivity.this, GalleryActivity.class);
                 startActivity(intent);
             }
         });
@@ -93,8 +101,41 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
                         //listen Click stuff event
                         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                Toast.makeText(getApplicationContext(), stuffsAdapter.getStuff(position) + " is a friend", Toast.LENGTH_SHORT).show();
+                            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+                                //Creating the instance of PopupMenu
+                                PopupMenu popup = new PopupMenu(MainActivity.this, view);
+                                //Inflating the Popup using xml file
+                                popup.getMenuInflater()
+                                        .inflate(R.menu.popup_menu, popup.getMenu());
+
+                                //registering popup with OnMenuItemClickListener
+                                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                    public boolean onMenuItemClick(MenuItem item) {
+                                        switch (item.getItemId()) {
+                                            case R.id.share:
+                                                File fileLocation = new File(stuffsAdapter.getStuff(position).get_picture());
+                                                Uri path = FileProvider.getUriForFile(MainActivity.this,"com.yupa.fileprovider",fileLocation);
+                                                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                                                emailIntent .setType("vnd.android.cursor.dir/email");
+                                                String to[] = {""};
+                                                emailIntent .putExtra(Intent.EXTRA_EMAIL, to);
+                                                emailIntent .putExtra(Intent.EXTRA_STREAM, path);
+                                                emailIntent .putExtra(Intent.EXTRA_SUBJECT, "I would like Share Stuff: "+stuffsAdapter.getStuff(position).get_name());
+                                                emailIntent .putExtra(Intent.EXTRA_TEXT,stuffsAdapter.getStuff(position).get_description());
+                                                startActivity(Intent.createChooser(emailIntent , "Send email..."));
+                                            case R.id.edit:
+                                                Toast.makeText(
+                                                        MainActivity.this,
+                                                        "You Clicked : edits " + item.getTitle(),
+                                                        Toast.LENGTH_SHORT
+                                                ).show();
+                                        }
+                                        return true;
+                                    }
+                                });
+
+                                popup.show(); //showing popup menu
+
                             }
                         });
                     }
@@ -102,6 +143,13 @@ public class MainActivity extends AppCompatActivity implements AboutCASFragment.
             });
 
         }
+    }
+
+    private void setmScreenWidth() {
+        WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics dm = new DisplayMetrics();
+        wm.getDefaultDisplay().getMetrics(dm);
+        mScreenWidth = dm.widthPixels;
     }
 
     @Override
